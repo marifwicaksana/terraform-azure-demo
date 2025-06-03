@@ -1,16 +1,29 @@
+variable "subscription" {
+  description = "Azure subscription ID"
+  type        = string
+}
+
 variable "project_name" {
   description = "Project name"
-  default = "simple-vm"
-  type = string
+  default     = "simple-vm"
+  type        = string
 }
 
 variable "region" {
   description = "Azure region to deploy the resources."
-  default = "	East US"
-  type = string
+  default     = "Central US"
+  type        = string
 }
 
 variable "vm_size" {
-  default = "Standard_DS1_v2"
+  default = "Standard_B2s"
+  type    = string
+}
+
+variable "username" {
+  type = string
+}
+
+variable "password" {
   type = string
 }
