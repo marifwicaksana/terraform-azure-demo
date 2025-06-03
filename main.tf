@@ -12,6 +12,13 @@ provider "azurerm" {
   subscription_id = var.subscription
 }
 
+data "azurerm_platform_image" "image" {
+  location  = azurerm_resource_group.rg.location
+  publisher = "Canonical"
+  offer     = "ubuntu-24_04-lts"
+  sku       = "ubuntu-pro"
+}
+
 resource "azurerm_resource_group" "rg" {
   name     = "${var.project_name}-rg"
   location = var.region
@@ -113,11 +120,13 @@ resource "azurerm_linux_virtual_machine" "vm" {
     storage_account_type = "Standard_LRS"
   }
 
+  #ource_image_id = data.azurerm_platform_image.image.id
+
   source_image_reference {
-    publisher = "Canonical"
-    offer     = "ubuntu-24_04-lts"
-    sku       = "ubuntu-pro"
-    version   = "latest"
+    publisher = data.azurerm_platform_image.image.publisher
+    offer     = data.azurerm_platform_image.image.offer
+    sku       = data.azurerm_platform_image.image.sku
+    version   = data.azurerm_platform_image.image.version
   }
 
   tags = {
